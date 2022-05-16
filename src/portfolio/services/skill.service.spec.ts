@@ -3,14 +3,24 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { SkillService } from '../services/skill.service';
 import { Skill } from '../entities/skill.entity';
 
-const mockRepository = () => ({
-  find: jest.fn(),
-  findOne: jest.fn(),
-  save: jest.fn(),
-  delete: jest.fn(),
-  update: jest.fn(),
-  create: jest.fn(),
-});
+// const mockRepository = () => ({
+//   find: jest.fn(),
+//   findOne: jest.fn(),
+//   save: jest.fn(),
+//   delete: jest.fn(),
+//   update: jest.fn(),
+//   create: jest.fn(),
+// });
+
+const mockRepository = jest.fn(() => ({
+  save: async () => {},
+  find: async () => {},
+  findOne: async () => {},
+  delete: async () => {},
+  update: async () => {},
+  create: async () => {},
+  dispose: async () => {},
+}))();
 
 describe('Skill Repository Service', () => {
   let service: SkillService;
@@ -35,7 +45,7 @@ describe('Skill Repository Service', () => {
     });
 
     it('should update an skill', async () => {
-      await service.update({ id: 1 }, { name: 'Skill 1 updated', level: 11 });
+      await service.update(1, { name: 'Skill 1 updated', level: 11 });
     });
 
     it('should delete an skill', async () => {
@@ -43,7 +53,7 @@ describe('Skill Repository Service', () => {
     });
 
     it('should get all skills', async () => {
-      await service.getAll(1);
+      await service.getAll();
     });
 
     it('should get one skill by id', async () => {

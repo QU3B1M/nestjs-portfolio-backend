@@ -9,5 +9,5 @@ export class Skill {
   name: string;
 
   @Column()
-  level: string;
+  level: number;
 }
