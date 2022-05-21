@@ -9,19 +9,19 @@ export class ServiceService {
   
   constructor(
     @InjectRepository(Service)
-    private skillRepository: Repository<Service>,
+    private serviceRepository: Repository<Service>,
   ) {}
 
   async getAll(): Promise<Service[]> {
-    return this.skillRepository.find();
+    return this.serviceRepository.find();
   }
 
   async getById(id: number): Promise<Service> {
-    return this.skillRepository.findOne(id);
+    return this.serviceRepository.findOne(id);
   }
 
   async getByTitle(title: string): Promise<Service> {
-    return this.skillRepository.findOne({ title });
+    return this.serviceRepository.findOne({ title });
   }
 
   async create(params: ServiceDto): Promise<Service> {
@@ -29,21 +29,21 @@ export class ServiceService {
     newSkill.title = params.title;
     newSkill.description = params.description;
 
-    return this.skillRepository.save(newSkill);
+    return this.serviceRepository.save(newSkill);
   }
 
   async update(id: number, params: ServiceDto): Promise<Service | undefined> {
-    const skill = await this.skillRepository.findOne(id);
+    const skill = await this.serviceRepository.findOne(id);
     if (!skill) {
       return undefined;
     }
     skill.title = params.title;
     skill.description = params.description;
 
-    return this.skillRepository.save(skill);
+    return this.serviceRepository.save(skill);
   }
 
   async delete(id: number): Promise<DeleteResult> {
-    return this.skillRepository.delete(id);
+    return this.serviceRepository.delete(id);
   }
 }
