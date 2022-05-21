@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ServiceService } from '../services/service.service';
-import { Service } from '../entities/service.entity';
+import { Service } from '../entities';
 
 const mockRepository = jest.fn(() => ({
   save: async () => {},
@@ -31,15 +31,21 @@ describe('Service Repository Service', () => {
   });
 
   it('should create a new service', async () => {
-    await service.create({ title: 'Service 1', description: "Some description" });
+    await service.create({
+      title: 'Service 1',
+      description: 'Some description',
+    });
   });
 
-  it("should create a new service without description", async () => {
+  it('should create a new service without description', async () => {
     await service.create({ title: 'Service 1' });
   });
 
   it('should update an service', async () => {
-    await service.update(1, { title: 'Service 1 updated', description: "Some description updated" });
+    await service.update(1, {
+      title: 'Service 1 updated',
+      description: 'Some description updated',
+    });
   });
 
   it('should delete an service', async () => {

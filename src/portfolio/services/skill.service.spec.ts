@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { SkillService } from '../services/skill.service';
-import { Skill } from '../entities/skill.entity';
+import { SkillService } from '../services';
+import { Skill } from '../entities';
 
 
 const mockRepository = jest.fn(() => ({

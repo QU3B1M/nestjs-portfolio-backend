@@ -1,34 +1,67 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { SkillService } from '../services/skill.service';
-import { Skill } from '../entities/skill.entity';
+import { ProjectService } from '../services';
+import { Project } from '../entities';
 
-const mockRepository = () => ({
-    find: jest.fn(),
-    findOne: jest.fn(),
-    save: jest.fn(),
-    delete: jest.fn(),
-    update: jest.fn(),
-    create: jest.fn(),
-});
+const mockRepository = jest.fn(() => ({
+  save: async () => {},
+  find: async () => {},
+  findOne: async () => {},
+  delete: async () => {},
+  update: async () => {},
+  create: async () => {},
+  dispose: async () => {},
+}))();
 
-describe('Skill Repository Service', () => {
-  let service: SkillService;
+describe('Project Repository Service', () => {
+  let priject: ProjectService;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [],
-      providers: [SkillService,  {
-        provide: getRepositoryToken(Skill),
-        useValue: mockRepository,
-      },],
+      providers: [
+        ProjectService,
+        {
+          provide: getRepositoryToken(Project),
+          useValue: mockRepository,
+        },
+      ],
     }).compile();
-
+    priject = module.get<ProjectService>(ProjectService);
   });
 
-  describe('Skill creation', () => {
-    it('should create a new skill', () => {
-        
+  it('should create a new priject', async () => {
+    await priject.create({
+      title: 'Project 1',
+      description: 'Some description',
     });
   });
+
+  it('should create a new priject without description', async () => {
+    await priject.create({ title: 'Project 1' });
+  });
+
+  it('should update an priject', async () => {
+    await priject.update(1, {
+      title: 'Project 1 updated',
+      description: 'Some description updated',
+    });
+  });
+
+  it('should delete an priject', async () => {
+    await priject.delete(1);
+  });
+
+  it('should get all skills', async () => {
+    await priject.getAll();
+  });
+
+  it('should get one priject by id', async () => {
+    await priject.getById(1);
+  });
+
+  it('should get one priject by title', async () => {
+    await priject.getByTitle('Project 1');
+  });
 });
+

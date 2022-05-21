@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
-import { SkillDto } from '../dtos/skill.dto';
-import { Skill } from '../entities/skill.entity';
+import { SkillDto } from '../dtos';
+import { Skill } from '../entities';
 
 @Injectable()
 export class SkillService {
